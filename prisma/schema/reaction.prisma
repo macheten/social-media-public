@@ -1,0 +1,18 @@
+model Reaction {
+  id   String       @id @default(uuid())
+  type ReactionType
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  post   Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String?
+
+  comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, commentId])
+  @@unique([userId, postId])
+}

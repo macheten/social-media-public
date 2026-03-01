@@ -1,0 +1,30 @@
+model Message {
+  id      String @id @default(uuid())
+  content String
+
+  user   User   @relation("SentMessages", fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chatId String
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  edited Boolean @default(false)
+
+  messageDeletions MessageDeletion[]
+}
+
+model MessageDeletion {
+  id String @id @default(uuid())
+
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  messageId String
+
+  deletedBy   User   @relation(fields: [deletedById], references: [id], onDelete: Cascade)
+  deletedById String
+
+  deletedAt DateTime @default(now())
+
+  @@unique([messageId, deletedById])
+}
