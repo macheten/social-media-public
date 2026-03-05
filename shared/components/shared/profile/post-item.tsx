@@ -5,17 +5,14 @@ import { cn } from "@shared/lib/utils";
 import { WhiteBlock } from "../white-block";
 import defaultAvatar from "@publicfiles/images/default-avatar.webp";
 import { Button } from "../../ui/button";
-import {
-  Forward,
-  MessageCircle,
-  Trash2,
-} from "lucide-react";
+import { Forward, MessageCircle, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { EditPostModal } from "../modals/edit-post-modal";
 import Link from "next/link";
 import { PostDTO, SetReactionProps } from "@mytypes/types";
 import { UpdatePostProps } from "@src/app/actions/profile/update-post";
 import { ReactionsButtons } from "../reactions-buttons";
+import { PostDropdownMenu, PostContextMenu } from "../posts/post-menus";
 
 interface Props {
   className?: string;
@@ -36,6 +33,7 @@ export const PostItem: React.FC<Props> = ({
   handleDelete,
   handleSetReaction,
 }) => {
+  const [open, setOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const onClickDelete = async () => {
@@ -53,75 +51,95 @@ export const PostItem: React.FC<Props> = ({
   };
   const imageUrl = post.author.imageUrl;
 
-  return (
-    <div
-      className={cn(className, "max-w-150", {
-        "pointer-events-none opacity-40 select-none": isDeleting,
-      })}
-    >
-      <WhiteBlock className='p-3'>
-        <div>
-          <div className='flex justify-between'>
-            <Link href={`/profile?userId=${post.authorId}`}>
-              <div className='flex items-center'>
-                <img
-                  width={50}
-                  height={50}
-                  className='w-12.5 h-12.5 object-cover rounded-full mr-3'
-                  alt='аватарка'
-                  src={imageUrl || defaultAvatar.src}
-                />
-                <div className='text-xl font-mono text-primary'>
-                  {post.author.username}
-                </div>
-              </div>
-            </Link>
+  const handleAction = async (action: string) => {
+    switch (action) {
+      case "edit":
+        setOpen(true)
+        break;
+      case "delete":
+        await onClickDelete();
+        break;
+      case "share":
+        navigator.clipboard.writeText(
+          `http://localhost:3000/comments?postId=${post.id}`,
+        );
+        toast.success("Ссылка скопирована");
+        break;
+      case "copy":
+        navigator.clipboard.writeText(`${post.title}\n${post.content}`);
+        toast.success("Текст скопирован");
+        break;
+    }
+  };
 
-            <div className='self-start'>
-              <Button variant={"outline"} className='mr-1 shadow-none'>
-                <Forward />
-              </Button>
+  return (
+    <PostContextMenu handleAction={handleAction}>
+      <div
+        className={cn(className, "max-w-150", {
+          "pointer-events-none opacity-40 select-none": isDeleting,
+        })}
+      >
+        <WhiteBlock className='p-3'>
+          <div>
+            <div className='flex justify-between'>
+              <Link href={`/profile?userId=${post.authorId}`}>
+                <div className='flex items-center'>
+                  <img
+                    width={50}
+                    height={50}
+                    className='w-12.5 h-12.5 object-cover rounded-full mr-3'
+                    alt='аватарка'
+                    src={imageUrl || defaultAvatar.src}
+                  />
+                  <div className='text-xl font-mono text-primary'>
+                    {post.author.username}
+                  </div>
+                </div>
+              </Link>
+
+              <div className='self-start'>
+                <PostDropdownMenu handleAction={handleAction} />
+              </div>
             </div>
-          </div>
-          <div className='text-2xl'>{post.title}</div>
-          <div className='py-3 border-b mb-2 wrap-break-word whitespace-pre-wrap'>
-            {post.content}
-          </div>
-          <div className='flex justify-between'>
-            <div className='flex gap-1'>
-              <ReactionsButtons
-                postId={post.id}
-                dislikes={post.reactions.dislikes}
-                likes={post.reactions.likes}
-                handleSetReaction={handleSetReaction}
-                userReaction={post.reactions.userReaction}
-              />
-              {!hideCommentsButton && (
-                <Link href={`/comments/${post.id}`} scroll={false}>
-                  <Button variant={"outline"}>
-                    <MessageCircle />
-                    <span>Комментарии {post.commentsCount}</span>
-                  </Button>
-                </Link>
+            <div className='text-2xl'>{post.title}</div>
+            <div className='py-3 border-b mb-2 wrap-break-word whitespace-pre-wrap'>
+              {post.content}
+            </div>
+            <div className='flex justify-between'>
+              <div className='flex gap-1'>
+                <ReactionsButtons
+                  postId={post.id}
+                  dislikes={post.reactions.dislikes}
+                  likes={post.reactions.likes}
+                  handleSetReaction={handleSetReaction}
+                  userReaction={post.reactions.userReaction}
+                />
+              </div>
+
+              {isProfileOwner && (
+                <div className='flex gap-1'>
+                  <EditPostModal
+                    onClose={() => setOpen(false)}
+                    open={open}
+                    onEdit={onEditPost}
+                    content={post.content}
+                    title={post.title}
+                    postId={post.id}
+                  />
+                  {!hideCommentsButton && (
+                    <Link href={`/comments/${post.id}`} scroll={false}>
+                      <Button variant={"outline"}>
+                        <MessageCircle />
+                        <span>Комментарии {post.commentsCount}</span>
+                      </Button>
+                    </Link>
+                  )}
+                </div>
               )}
             </div>
-
-            {isProfileOwner && (
-              <div className='flex gap-1'>
-                <EditPostModal
-                  onEdit={onEditPost}
-                  content={post.content}
-                  title={post.title}
-                  postId={post.id}
-                />
-                <Button onClick={onClickDelete}>
-                  <Trash2 />
-                </Button>
-              </div>
-            )}
           </div>
-        </div>
-      </WhiteBlock>
-    </div>
+        </WhiteBlock>
+      </div>
+    </PostContextMenu>
   );
 };

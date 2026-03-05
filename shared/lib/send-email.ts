@@ -32,9 +32,7 @@ export const sendEmail = async ({
     };
 
     const result = await transporter.sendMail(mailOptions);
-    console.log("Письмо отправлено:", result.messageId);
   } catch (error) {
-    console.error("Ошибка отправки:", error);
     throw error
   }
 };

@@ -1,5 +1,5 @@
 import { UpdatePostProps } from "@src/app/actions/profile/update-post";
-import { SetPostReactionProps, usePostStore } from "@src/store/posts-state";
+import { usePostStore } from "@src/store/posts-state";
 import { SetReactionProps } from "@mytypes/types";
 import { useEffect, useState } from "react";
 

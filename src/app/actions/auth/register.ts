@@ -1,5 +1,5 @@
 "use server";
-
+import crypto from 'crypto';
 import { prisma } from "@db/prisma-client";
 import { RegisterEmail } from "@shared/components/shared/email-templates/register-email";
 import { sendEmail } from "@shared/lib/send-email";

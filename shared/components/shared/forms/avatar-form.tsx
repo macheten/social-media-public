@@ -13,7 +13,6 @@ export const ChangeAvatarForm: React.FC = () => {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      console.log("Выбран файл:", file);
       try {
         const res = await updateAvatar(file);
         if (res.success) {

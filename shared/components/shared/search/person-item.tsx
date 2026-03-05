@@ -18,8 +18,8 @@ export const PersonItem: React.FC<Props> = ({
   return (
     <div className={cn(className)}>
       <div className='flex justify-between items-center'>
-        <div className="flex items-center">
-          <Link href={`/profile?userId=${id}`} className="mr-5">
+        <div className="flex items-center shrink">
+          <Link href={`/profile?userId=${id}`} className="mr-5 shrink-0">
             <img
               height={80}
               width={80}
@@ -28,7 +28,7 @@ export const PersonItem: React.FC<Props> = ({
               alt='avatar'
             />
           </Link>
-          <div className='text-xl'>{username}</div>
+          <div className='text-xl truncate max-w-[100px] sm:max-w-[200px]'>{username}</div>
         </div>
 
         <div>

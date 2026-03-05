@@ -26,7 +26,7 @@ export default async function MessengerPage({ searchParams }: PageProps) {
   }
 
   return (
-    <WhiteBlock className='p-2 h-[calc(100vh-70px)]'>
+    <WhiteBlock className='p-2 h-[calc(100vh-88px)]'>
       <ResizablePanelGroup direction='horizontal'>
         <ResizablePanel
           collapsible

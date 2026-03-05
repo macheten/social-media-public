@@ -7,6 +7,10 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { Container } from "./container";
+import { useBreakpoint } from "@shared/lib/hooks/use-breakpoint";
+import { Button } from "../ui/button";
+import { Menu } from "lucide-react";
+import { MobileNavigation } from "./mobile-navigation";
 
 export const Header: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -23,15 +27,16 @@ export const Header: React.FC = () => {
   }, []);
 
   return (
-    <div className='p-2 border-b items-center dark:bg-accent bg-white mb-2 shadow sticky top-0 z-1'>
+    <div className='p-2 border-b dark:bg-accent bg-white mb-2 shadow sticky top-0 z-1'>
       <Container>
-        <div className='flex justify-between'>
-          <Link className='text-2xl' href={"/"}>
+        <div className='flex justify-between items-center'>
+          <Link className='text-xl sm:text-2xl' href={"/"}>
             Social Media
           </Link>
 
-          <div>
+          <div className="flex gap-2">
             <AuthButton onClick={() => setOpenModal(true)} />
+            <MobileNavigation />
           </div>
           <AuthModal onClose={() => setOpenModal(false)} open={openModal} />
         </div>

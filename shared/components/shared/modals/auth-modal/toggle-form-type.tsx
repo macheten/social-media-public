@@ -10,20 +10,20 @@ interface Props {
 
 export const ToggleFormType: React.FC<Props> = ({ isLoginForm, setIsLoginForm }) => {
   return (
-    <div className='flex mb-5 self-center rounded-2xl overflow-hidden border'>
+    <div className='flex mb-5 self-center rounded-2xl overflow-hidden border w-[calc(100%-60px)]'>
       <Button
         onClick={() => setIsLoginForm(true)}
-        className={cn("w-40 rounded-none border-none transition-all", {
+        className={cn("flex-1 rounded-none border-none transition-all", {
           "bg-gray-100": isLoginForm,
         })}
         variant={"outline"}
       >
-        Вход
+        Вход1
         <LogIn />
       </Button>
       <Button
         onClick={() => setIsLoginForm(false)}
-        className={cn("w-40 rounded-none border-none transition-all", {
+        className={cn("flex-1 rounded-none border-none transition-all", {
           "bg-gray-100": !isLoginForm,
         })}
         variant={"outline"}

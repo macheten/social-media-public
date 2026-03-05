@@ -24,8 +24,6 @@ export const authOptions: AuthOptions = {
           },
         });
 
-        console.log(user)
-
         if (!user || !user.password || !user.activated) {
           return null;
         }
@@ -34,7 +32,6 @@ export const authOptions: AuthOptions = {
           credentials.password,
           user.password
         );
-        console.log(isPasswordValid)
 
         if (!isPasswordValid) {
           return null;

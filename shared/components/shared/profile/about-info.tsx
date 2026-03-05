@@ -10,7 +10,7 @@ interface Props {
 
 export const AboutInfo: React.FC<Props> = ({ className, about, isProfileOwner }) => {
   return (
-    <div className={className}>
+    <>
       {!about ? (
         isProfileOwner && (
           <Link href={"/profile/settings"} className='flex group'>
@@ -19,10 +19,10 @@ export const AboutInfo: React.FC<Props> = ({ className, about, isProfileOwner })
           </Link>
         )
       ) : (
-        <div>
-          <div className='text-black font-mono'>{about}</div>
+        <div className="text-black font-mono whitespace-normal">
+          {about}
         </div>
       )}
-    </div>
+    </>
   );
 };

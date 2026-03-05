@@ -54,7 +54,7 @@ export const PeopleList: React.FC<Props> = ({ className }) => {
   }
 
   return (
-    <WhiteBlock className={cn(className, "p-4 max-w-150 mb-3")}>
+    <WhiteBlock className={cn(className, "p-4 w-full md:max-w-[600px] mb-3")}>
       <h1 className='text-2xl mb-3'>Поиск</h1>
       <SearchInput onSubmit={() => initialFetchUsers()} className='mb-5' />
 

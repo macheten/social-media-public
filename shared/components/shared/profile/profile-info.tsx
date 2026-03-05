@@ -30,20 +30,19 @@ export const ProfileInfo: React.FC<Props> = ({
 
   return (
     <div className={cn(className)}>
-      <WhiteBlock className='px-8 py-4'>
+      <WhiteBlock className='p-2 sm:px-8 py-4'>
         {loading ? (
           <ProfileSkeleton />
         ) : (
           <div className='flex justify-between'>
-            <div className='flex items-start '>
-              <Avatar isProfileOwner={isProfileOwner} size={150} />
-              <div className='inline-flex flex-col mb-0.5 max-w-62.5'>
+            <div className='flex items-start'>
+              <Avatar isProfileOwner={isProfileOwner} />
+              <div className='flex flex-col mb-0.5 max-w-[250px]'>
                 <div className='text-2xl font-bold'>{profile.username}</div>
                 <AboutInfo
                   about={profile.about}
                   isProfileOwner={isProfileOwner}
                 />
-                {/* <div>{friendshipExists?.status || 'no friends'}</div> */}
               </div>
             </div>
 

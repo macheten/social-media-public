@@ -8,7 +8,7 @@ export const ChangeProfileBtn: React.FC = () => {
     <Link href={"/profile/settings"}>
       <Button variant={"outline"}>
         <Pencil />
-        Изменить профиль
+        <span className="hidden sm:block">Изменить профиль</span>
       </Button>
     </Link>
   );

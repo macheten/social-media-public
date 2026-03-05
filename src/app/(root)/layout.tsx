@@ -1,3 +1,4 @@
+import { Skeleton } from "@shared/components/ui/skeleton";
 import { Header } from "../../../shared/components/shared/header";
 import { Navigation } from "../../../shared/components/shared/navigation";
 import type { Metadata } from "next";
@@ -15,13 +16,13 @@ export default function HomeLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <main className='min-h-screen grid grid-rows-[auto_1fr]'>
-      <Suspense>
+    <main className='min-h-screen'>
+      <Suspense fallback={<Skeleton className="sticky top-0 z-1 h-[53px]" />}>
         <Header />
       </Suspense>
-      <div className='max-w-6xl mx-auto w-full grid grid-cols-[192px_1fr] gap-6 pb-2'>
-        <Navigation />
-        <div className='min-h-0'>{children}</div>
+      <div className='max-w-6xl mx-auto w-full gap-6 pb-2 p-2 flex'>
+        <Navigation className="not-md:hidden sticky top-18 self-start w-48" />
+        <div className='min-h-0 flex-1'>{children}</div>
       </div>
       {modal}
     </main>

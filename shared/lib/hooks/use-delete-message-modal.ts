@@ -11,8 +11,6 @@ export const useDeleteMessageModal = () => {
     messageId: null,
   });
 
-  // console.log(state.messageId);
-
   const open = useCallback((messageId: string) => {
     setState({
       isOpen: true,

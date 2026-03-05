@@ -50,7 +50,7 @@ export const ProfileForm: React.FC<Props> = ({ profile }) => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       <Form>
         <div className='max-w-125 mb-5'>
-          <div className="block">
+          <div className="inline-block">
             <Avatar isProfileOwner={true} size={100} className="mb-5" />
           </div>
           <div className='mb-2'>

@@ -13,6 +13,8 @@ import { Pencil } from "lucide-react";
 import { UpdatePostProps } from "@src/app/actions/profile/update-post";
 
 interface Props extends EditPostInitialValues {
+  open: boolean
+  onClose: () => void
   postId: string;
   onEdit: ({}: UpdatePostProps) => Promise<void>;
 }
@@ -20,16 +22,12 @@ interface Props extends EditPostInitialValues {
 export const EditPostModal: React.FC<Props> = ({
   postId,
   onEdit,
+  onClose,
+  open,
   ...props
 }) => {
-  const [open, setOpen] = useState(false);
   return (
-    <Dialog open={open} onOpenChange={(e) => setOpen(e)}>
-      <DialogTrigger asChild>
-        <Button>
-          <Pencil />
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogTitle hidden title='Изменить пост' />
         <div>
@@ -37,7 +35,7 @@ export const EditPostModal: React.FC<Props> = ({
 
           <EditPostForm
             onEdit={onEdit}
-            closeModal={() => setOpen(false)}
+            closeModal={onClose}
             postId={postId}
             {...props}
           />

@@ -9,7 +9,7 @@ interface Props {
 
 export const Navigation: React.FC<Props> = ({ className }) => {
   return (
-    <div className={cn(className, "sticky top-16 self-start w-48")}>
+    <div className={cn(className, "")}>
         <NavLink href="/" text="Главная" Icon={Home} />
         <NavLink href="/profile" text="Профиль" Icon={User} />
         <NavLink href="/messenger" text="Сообщения" Icon={MessageCircle} />

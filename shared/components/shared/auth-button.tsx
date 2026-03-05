@@ -5,6 +5,7 @@ import { Button } from "@shared/components/ui/button";
 import { LogIn, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { cn } from "@shared/lib/utils";
 
 interface Props {
   className?: string;
@@ -15,24 +16,28 @@ export const AuthButton: React.FC<Props> = ({ className, onClick }) => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <Button loading className='mr-2 w-27' />;
+    return <Button loading className='w-27' />;
   }
 
   return (
     <>
       {session?.user ? (
-        <div>
+        <>
           <Link href={"/profile"}>
-            <Button className='mr-2'>
+            <Button>
               <User />
               Профиль
             </Button>
           </Link>
-          <Button onClick={() => signOut()} variant={'outline'}>
-            <LogOut  />
+          <Button
+            className='not-md:hidden'
+            onClick={() => signOut()}
+            variant={"outline"}
+          >
+            <LogOut />
             Выйти
           </Button>
-        </div>
+        </>
       ) : (
         <Button onClick={onClick}>
           <LogIn />

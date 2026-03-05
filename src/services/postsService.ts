@@ -20,7 +20,6 @@ export const fetchPosts = async ({ cursor, userId }: FetchPostsProps): Promise<F
 }
 
 export const getPost = async (postId: string): Promise<{ post: PostDTO }> => {
-    console.log(postId)
     const res = await axiosInstance.get(`/posts/${postId}`)
     return res.data
 }
