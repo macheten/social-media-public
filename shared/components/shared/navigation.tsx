@@ -5,16 +5,17 @@ import { Home, MessageCircle, Search, User, Users } from "lucide-react";
 
 interface Props {
   className?: string;
+  onClick?: () => void
 }
 
-export const Navigation: React.FC<Props> = ({ className }) => {
+export const Navigation: React.FC<Props> = ({ className, onClick }) => {
   return (
     <div className={cn(className, "")}>
-        <NavLink href="/" text="Главная" Icon={Home} />
-        <NavLink href="/profile" text="Профиль" Icon={User} />
-        <NavLink href="/messenger" text="Сообщения" Icon={MessageCircle} />
-        <NavLink href="/search" text="Поиск" Icon={Search} />
-        <NavLink href="/friends?section=allFriends" text="Друзья" Icon={Users} />
+        <NavLink onClick={onClick} href="/" text="Главная" Icon={Home} />
+        <NavLink onClick={onClick} href="/profile" text="Профиль" Icon={User} />
+        <NavLink onClick={onClick} href="/messenger" text="Сообщения" Icon={MessageCircle} />
+        <NavLink onClick={onClick} href="/search" text="Поиск" Icon={Search} />
+        <NavLink onClick={onClick} href="/friends?section=allFriends" text="Друзья" Icon={Users} />
     </div>
   );
 };

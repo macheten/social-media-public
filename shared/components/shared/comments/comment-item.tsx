@@ -52,9 +52,13 @@ export const CommentItem: React.FC<Props> = ({
   };
   return (
     <div
-      className={cn(className, "border dark:bg-accent bg-white max-w-150 rounded-2xl p-2", {
-        "pointer-events-none opacity-40 select-none": deleting,
-      })}
+      className={cn(
+        className,
+        "border dark:bg-accent bg-white max-w-150 rounded-2xl p-2",
+        {
+          "pointer-events-none opacity-40 select-none": deleting,
+        },
+      )}
     >
       <div className='flex justify-between'>
         <div

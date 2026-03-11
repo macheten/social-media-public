@@ -1,14 +1,10 @@
 'use server'
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { prisma } from "@db/prisma-client";
+import { getAuthUser } from "@shared/lib/get-auth-user";
 
 export const deleteFriend = async (friendshipId: string) => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    throw new Error("unauthorized");
-  }
+  const session = await getAuthUser()
 
   const res = await prisma.friendship.deleteMany({
     where: {

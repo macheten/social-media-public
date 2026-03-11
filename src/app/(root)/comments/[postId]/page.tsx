@@ -14,11 +14,8 @@ export default async function CommentsPage({ params }: Params) {
 
   return (
     <div className='max-w-150'>
-      <SinglePost
-      postId={postId}
-        className='mb-5'
-      />
-      <CommentsCount marginClassName="mb-2" />
+      <SinglePost postId={postId} className='mb-5' />
+      <CommentsCount marginClassName='mb-2' />
       <CreateCommentForm className='mb-3' postId={postId} />
       <CommentsList postId={postId} />
     </div>

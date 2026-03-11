@@ -1,9 +1,8 @@
 "use server";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { prisma } from "@db/prisma-client";
 import { findExistingFriendship } from "@shared/lib/findExistingFriendship";
+import { getAuthUser } from "@shared/lib/get-auth-user";
 
 export interface CreateFriendshipProps {
   receiverId: string;
@@ -12,10 +11,7 @@ export interface CreateFriendshipProps {
 export const createFriendship = async ({
   receiverId,
 }: CreateFriendshipProps) => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    throw new Error("unauthorized");
-  }
+  const session = await getAuthUser()
 
   const existingFriendship = await findExistingFriendship({
     currentUserId: session.user.id,

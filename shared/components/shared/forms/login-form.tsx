@@ -12,6 +12,7 @@ import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import googleIcon from "@publicfiles/icons/google-icon.svg";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Props {
   closeModal: () => void;
@@ -23,6 +24,7 @@ export const LoginForm: React.FC<Props> = ({ closeModal }) => {
     email: "",
     password: "",
   };
+  const router = useRouter()
 
   const onSubmit = async (data: typeof initialValues) => {
     try {
@@ -35,6 +37,7 @@ export const LoginForm: React.FC<Props> = ({ closeModal }) => {
         if (res?.ok) {
           toast.success("Вы вошли в аккаунт!");
           closeModal();
+          router.push('/')
         } else {
           toast.error("Не удалось войти");
         }

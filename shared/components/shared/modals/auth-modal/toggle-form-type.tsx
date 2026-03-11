@@ -18,7 +18,7 @@ export const ToggleFormType: React.FC<Props> = ({ isLoginForm, setIsLoginForm })
         })}
         variant={"outline"}
       >
-        Вход1
+        Вход
         <LogIn />
       </Button>
       <Button

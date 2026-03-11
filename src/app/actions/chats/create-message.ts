@@ -1,9 +1,8 @@
 'use server'
 
 import { prisma } from "@db/prisma-client"
-import { getServerSession } from "next-auth"
-import { authOptions } from "../../api/auth/[...nextauth]/route"
 import { pusherServer } from "@shared/lib/pusher/pusher-server"
+import { getAuthUser } from "@shared/lib/get-auth-user"
 
 export interface CreateMessageProps {
     content: string
@@ -11,11 +10,7 @@ export interface CreateMessageProps {
 }
 
 export async function createMessage({ content, chatId }: CreateMessageProps) {
-    const session = await getServerSession(authOptions)
-
-    if (!session) {
-        throw new Error('unauthorized')
-    }
+    const session = await getAuthUser()
 
     const message = await prisma.message.create({
         data: {

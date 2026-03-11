@@ -1,9 +1,8 @@
 "use server";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { prisma } from "@db/prisma-client";
 import { pusherServer } from "@shared/lib/pusher/pusher-server";
+import { getAuthUser } from "@shared/lib/get-auth-user";
 
 export interface EditMessageProps {
   messageId: string | null;
@@ -14,11 +13,7 @@ export const editMessage = async ({ content, messageId }: EditMessageProps) => {
   if (!messageId || !content) {
     throw new Error("bad request");
   }
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    throw new Error("unauthorized");
-  }
+  const session = await getAuthUser()
 
   const message = await prisma.message.update({
     where: {

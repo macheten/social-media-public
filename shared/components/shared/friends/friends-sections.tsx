@@ -1,39 +1,28 @@
 import React from "react";
-import Link from "next/link";
-import { cn } from "@shared/lib/utils";
 import { FriendsSectionsType } from "@src/app/(root)/friends/page";
+import { SectionLink } from "./section-link";
 
 interface Props {
-  selectedSection: FriendsSectionsType
+  selectedSection: FriendsSectionsType;
 }
 
-export const FriendsSections: React.FC<Props> = ({selectedSection}) => {
+const sections = [
+  { name: "allFriends", text: "Друзья" },
+  { name: "incomingRequests", text: "Входящие заявки" },
+  { name: "outcomingRequests", text: "Исходящие заявки" },
+];
+
+export const FriendsSections: React.FC<Props> = ({ selectedSection }) => {
   return (
-    <div className='flex flex-col gap-1'>
-      <Link
-        href={"/friends?section=allFriends"}
-        className={cn('p-2 rounded-lg hover:bg-gray-100 transition-all', {
-          "bg-gray-200 hover:bg-gray-200": selectedSection === "allFriends"
-        })}
-      >
-        Друзья
-      </Link>
-      <Link
-        href={"/friends?section=incomingRequests"}
-        className={cn('p-2 rounded-lg hover:bg-gray-100 transition-all', {
-          "bg-gray-200 hover:bg-gray-200": selectedSection === "incomingRequests"
-        })}
-      >
-        Входящие заявки
-      </Link>
-      <Link
-        href={"/friends?section=outcomingRequests"}
-        className={cn('p-2 rounded-lg hover:bg-gray-100 transition-all', {
-          "bg-gray-200 hover:bg-gray-200": selectedSection === 'outcomingRequests'
-        })}
-      >
-        Исходящие заявки
-      </Link>
+    <div className='flex flex-col gap-1 not-sm:flex-row not-sm:text-center not-sm:items-center not-sm:justify-center'>
+      {sections.map((s) => (
+        <SectionLink
+          key={s.name}
+          name={s.name}
+          selected={selectedSection === s.name}
+          text={s.text}
+        />
+      ))}
     </div>
   );
 };

@@ -1,9 +1,8 @@
 "use server";
 
 import { prisma } from "@db/prisma-client";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { CommentDTO } from "@mytypes/types";
+import { getAuthUser } from "@shared/lib/get-auth-user";
 
 export interface CreateCommentProps {
   content: string;
@@ -17,11 +16,7 @@ interface ReturnType {
 export async function createComment(
   data: CreateCommentProps,
 ): Promise<ReturnType> {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    throw new Error("unauthorized");
-  }
+  const session = await getAuthUser()
 
   const newComment = await prisma.comment.create({
     data: {

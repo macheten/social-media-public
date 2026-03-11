@@ -6,6 +6,7 @@ import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { ChatType, Prisma } from "@prisma/client";
 import { pusherServer } from "@shared/lib/pusher/pusher-server";
 import { mapChatToDto } from "@shared/lib/map-to-dto/map-chat-to-dto";
+import { getAuthUser } from "@shared/lib/get-auth-user";
 
 export interface CreateChatProps {
   type: ChatType;
@@ -13,11 +14,7 @@ export interface CreateChatProps {
 }
 
 export const createChat = async ({ membersIds, type }: CreateChatProps) => {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    throw new Error("unauthorized");
-  }
+  const session = await getAuthUser()
 
   // ошибка если не передали список участников
   if (!membersIds.length) {

@@ -1,10 +1,9 @@
 "use server";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import { ReactionType } from "@prisma/client";
 import { prisma } from "@db/prisma-client";
 import { mapReactionsToDto } from "@shared/lib/get-reactions";
+import { getAuthUser } from "@shared/lib/get-auth-user";
 
 export interface ToggleReactionProps {
   commentId?: string;
@@ -17,11 +16,7 @@ export async function toggleReaction({
   postId,
   type,
 }: ToggleReactionProps) {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    throw new Error("unauthorized");
-  }
+  const session = await getAuthUser()
 
   if ((!commentId && !postId) || (commentId && postId)) {
     throw new Error(

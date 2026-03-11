@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FriendDTO } from "@mytypes/types";
 import { FriendsSectionsType } from "@src/app/(root)/friends/page";
 import { Button } from "../../ui/button";
-import { Check, MessageCircle, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { DeleteFriendMenu } from "./delete-friend-menu";
 import defaultAvatar from "@publicfiles/images/default-avatar.png";
 import toast from "react-hot-toast";

@@ -32,15 +32,10 @@ export const ProfileForm: React.FC<Props> = ({ profile }) => {
   const onSubmit = async (data: UpdateProfileProps) => {
     try {
       setLoading(true);
-      const res = await updateProfile(data);
-      if (res.success) {
-        toast.success(res.message);
-      } else {
-        toast.error(res.message);
-      }
+      await updateProfile(data);
+      toast.success("Профиль успешно обновлён");
     } catch (error) {
-      console.error(error);
-      toast.error("Что-то пошло не так");
+      toast.error("Не удалось обновить профиль");
     } finally {
       setLoading(false);
     }

@@ -54,14 +54,14 @@ export const PostItem: React.FC<Props> = ({
   const handleAction = async (action: string) => {
     switch (action) {
       case "edit":
-        setOpen(true)
+        setOpen(true);
         break;
       case "delete":
         await onClickDelete();
         break;
       case "share":
         navigator.clipboard.writeText(
-          `http://localhost:3000/comments?postId=${post.id}`,
+          `${process.env.NEXT_PUBLIC_SITE_URL}/comments/${post.id}`,
         );
         toast.success("Ссылка скопирована");
         break;
@@ -116,8 +116,8 @@ export const PostItem: React.FC<Props> = ({
                 />
               </div>
 
+              <div className='flex gap-1'>
               {isProfileOwner && (
-                <div className='flex gap-1'>
                   <EditPostModal
                     onClose={() => setOpen(false)}
                     open={open}
@@ -126,16 +126,16 @@ export const PostItem: React.FC<Props> = ({
                     title={post.title}
                     postId={post.id}
                   />
-                  {!hideCommentsButton && (
-                    <Link href={`/comments/${post.id}`} scroll={false}>
-                      <Button variant={"outline"}>
-                        <MessageCircle />
-                        <span>Комментарии {post.commentsCount}</span>
-                      </Button>
-                    </Link>
-                  )}
+                )}
+                {!hideCommentsButton && (
+                  <Link href={`/comments/${post.id}`} scroll={false}>
+                    <Button variant={"outline"}>
+                      <MessageCircle />
+                      <span>Комментарии {post.commentsCount}</span>
+                    </Button>
+                  </Link>
+                )}
                 </div>
-              )}
             </div>
           </div>
         </WhiteBlock>

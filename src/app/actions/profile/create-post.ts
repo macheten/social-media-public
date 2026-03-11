@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { prisma } from "@db/prisma-client";
 import { PostDTO } from "@mytypes/types";
+import { getAuthUser } from "@shared/lib/get-auth-user";
 
 export interface CreatePostProps {
   title: string;
@@ -19,11 +20,7 @@ export async function createPost({
   content,
   title,
 }: CreatePostProps): Promise<ReturnType> {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    throw new Error("unauthorized");
-  }
+  const session = await getAuthUser()
 
   const newPost = await prisma.post.create({
     data: {

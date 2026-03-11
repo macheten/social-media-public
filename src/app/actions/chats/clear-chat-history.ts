@@ -3,6 +3,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { prisma } from "@db/prisma-client";
+import { getAuthUser } from "@shared/lib/get-auth-user";
 
 export interface ClearChatHistoryProps {
   chatId: string;
@@ -13,10 +14,7 @@ export const clearChatHistory = async ({
   chatId,
   forAll,
 }: ClearChatHistoryProps) => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    throw new Error("unauthorized");
-  }
+  const session = await getAuthUser()
 
   // ищем чат
   const chat = await prisma.chat.findFirst({

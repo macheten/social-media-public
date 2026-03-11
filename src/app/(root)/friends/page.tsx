@@ -32,12 +32,12 @@ export default async function FriendsPage({ searchParams }: PageProps) {
   }
   
   return (
-    <div className='flex justify-between'>
-      <WhiteBlock className='p-2 mr-2 flex-8'>
+    <div className='flex justify-between not-sm:flex-col-reverse relative'>
+      <WhiteBlock className='p-2 sm:mr-2 flex-8'>
         <FriendshipsList section={section} />
       </WhiteBlock>
 
-      <WhiteBlock className='px-2 py-1 sticky top-15 self-start flex-2'>
+      <WhiteBlock className='px-2 py-1 sticky top-[70px] not-sm:mb-2 not-sm:shadow self-start flex-2 w-full'>
         <FriendsSections selectedSection={section} />
       </WhiteBlock>
     </div>

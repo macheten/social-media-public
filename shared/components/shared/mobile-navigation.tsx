@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -14,36 +15,36 @@ import { signOut } from "next-auth/react";
 import { cn } from "@shared/lib/utils";
 
 interface Props {
-  className?: string
+  className?: string;
+  onClose: () => void
+  open: boolean
 }
 
-export const MobileNavigation: React.FC<Props> = ({ className }) => {
+export const MobileNavigation: React.FC<Props> = ({ className, open, onClose }) => {
   return (
-    <Drawer direction='left'>
-      <DrawerTrigger className={'md:hidden'} asChild>
-        <Button variant={"outline"}>
-          <Menu /> Меню
-        </Button>
-      </DrawerTrigger>
+    <Drawer open={open} onOpenChange={onClose} direction='left'>
+      {/* <DrawerTrigger className={"md:hidden"} asChild>
+        
+      </DrawerTrigger> */}
 
-      <DrawerContent className={cn('min-w-0 max-w-min')}>
+      <DrawerContent className={cn("min-w-0 max-w-min")}>
         <DrawerHeader className='text-left'>
           <DrawerTitle className='text-2xl'>Меню</DrawerTitle>
         </DrawerHeader>
 
-        <Navigation className='px-7' />
+        <Navigation onClick={onClose} className='px-7' />
 
         <DrawerFooter>
           <Button
-            size={'sm'}
+            size={"sm"}
             onClick={() => {
-              if (window.confirm('Вы точно хотите выйти?')) {
-                () => signOut()
+              if (window.confirm("Вы точно хотите выйти?")) {
+                () => signOut();
               }
             }}
             variant={"outline"}
           >
-            <LogOut className="text-primary" />
+            <LogOut className='text-primary' />
             Выйти
           </Button>
         </DrawerFooter>
